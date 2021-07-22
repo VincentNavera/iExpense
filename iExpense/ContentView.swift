@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var expenses = Expenses()
     @State private var  showingAddExpense = false
+    
     var body: some View {
         NavigationView {
             List {
@@ -31,7 +32,7 @@ struct ContentView: View {
 
             }
             .navigationBarTitle("iExpense")
-            .navigationBarItems(trailing: Button(action: {
+            .navigationBarItems(leading: EditButton(), trailing: Button(action: {
                 self.showingAddExpense = true
 
             }) {
