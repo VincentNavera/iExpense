@@ -8,9 +8,36 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var expenses = Expenses()
+    @State private var  showingAddExpense = false
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            List {
+                ForEach(expenses.items) { item in
+                    Text(item.name)
+
+                }
+                .onDelete(perform: removeItems)
+
+            }
+            .navigationBarTitle("iExpense")
+            .navigationBarItems(trailing: Button(action: {
+                self.showingAddExpense = true
+
+            }) {
+                Image(systemName: "plus")
+
+            })
+
+        }
+        .sheet(isPresented: $showingAddExpense) {
+            AddView(expenses: self.expenses)
+        }
+
+    }
+
+    func removeItems(at offsets: IndexSet) {
+        expenses.items.remove(atOffsets: offsets)
     }
 }
 
